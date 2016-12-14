@@ -8,7 +8,10 @@ class App extends Component {
   componentWillMount() {
     const url = 'http://localhost:3000/websocket';
     Meteor.connect(url);
-    console.log(Accounts);
+    // Meteor.call('login', { phone: '+phone', password: 'toto', profile: {name: 'edgard'} }, (err, res) => {
+    //   if(err) console.log(err);
+    //   if(res) console.log(res);
+    // });
   }
 
   render() {
