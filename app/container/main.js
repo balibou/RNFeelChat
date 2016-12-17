@@ -3,7 +3,10 @@ import { connect } from 'react-redux';
 import Meteor, { createContainer } from 'react-native-meteor';
 import React, { Component } from 'react';
 import { View, StyleSheet, Text } from 'react-native';
+
+import Loading from '../components/Loading';
 import settings from '../config/settings';
+import LoggedOut from '../layouts/LoggedOut';
 
 class App extends Component {
   componentWillMount() {
@@ -15,11 +18,7 @@ class App extends Component {
     const status = Meteor.status();
 
     if (status.connected === false || loggingIn) {
-      return (
-        <View style={styles.container}>
-          <Text>Loading</Text>
-        </View>
-      );
+      return <Loading />;
     } else if (user !== null) {
       return (
         <View style={styles.container}>
@@ -27,11 +26,7 @@ class App extends Component {
         </View>
       );
     }
-    return (
-      <View style={styles.container}>
-        <Text>LoggedOut</Text>
-      </View>
-    );
+    return <LoggedOut />;
   }
 }
 
