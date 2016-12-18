@@ -10,15 +10,16 @@ class SignIn extends Component {
     this.textInput.focus();
   }
   render() {
+    const { navigator } = this.props;
     return (
       <View>
         <ListItem
           key={1}
-          title='United Kingdom'
+          title={navigator.props.selectedCountry.title}
           underlayColor={colors.underlayColor}
           onPress={() => {
             const route = Routes.getCountryRoute();
-            this.props.navigator.push(route);
+            navigator.push(route);
           }}
           containerStyle={styles.countryContainer}
           titleStyle={styles.countryAndCodePhoneTitle}
@@ -26,7 +27,7 @@ class SignIn extends Component {
         <View style={styles.phoneCodeAndPhoneContainer}>
           <ListItem
             key={2}
-            title='+44'
+            title={navigator.props.selectedCountry.phoneCode}
             containerStyle={styles.phoneCodeContainer}
             titleStyle={styles.countryAndCodePhoneTitle}
           />

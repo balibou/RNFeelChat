@@ -7,7 +7,11 @@ export const routes = {
   getSignInRoute() {
     return {
       renderScene(navigator) {
-        return <SignIn navigator={navigator} />;
+        return (
+          <SignIn
+            navigator={navigator}
+          />
+        );
       },
 
       showNavigationBar: true,
@@ -21,12 +25,20 @@ export const routes = {
           <Button text='Next' onPress={() => { console.log('Tapped right button'); }} />
         );
       },
+
+      renderLeftButton() {
+        return null;
+      },
     };
   },
   getCountryRoute() {
     return {
       renderScene(navigator) {
-        return <Country navigator={navigator} />;
+        return (
+          <Country
+            navigator={navigator}
+          />
+        );
       },
 
       showNavigationBar: true,

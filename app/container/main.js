@@ -7,6 +7,7 @@ import { View, StyleSheet, Text } from 'react-native';
 import Loading from '../components/Loading';
 import settings from '../config/settings';
 import LoggedOut from '../layouts/LoggedOut';
+import * as countryActions from '../actions/countryActions';
 
 class App extends Component {
   componentWillMount() {
@@ -26,7 +27,7 @@ class App extends Component {
         </View>
       );
     }
-    return <LoggedOut />;
+    return <LoggedOut {...this.props} />;
   }
 }
 
@@ -37,7 +38,12 @@ const MeteorContainer = createContainer(() => {
   };
 }, App);
 
-export default connect(
+export default connect(state => ({
+  selectedCountry: state.Country.selectedCountry,
+}),
+  (dispatch) => ({
+    countryActions: bindActionCreators(countryActions, dispatch),
+  })
 )(MeteorContainer);
 
 const styles = StyleSheet.create({
