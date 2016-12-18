@@ -18,7 +18,7 @@ export const createUserWithPhone = (options, callback) => {
   call('createUserWithPhone', options, (err, res) => {
     Meteor._endLoggingIn();
     Meteor._handleLoginCallback(err, res);
-    callback(err);
+    callback(err, res);
   });
 };
 

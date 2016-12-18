@@ -47,4 +47,7 @@ export default StyleSheet.create({
     fontWeight: '500',
     color: 'black',
   },
+  termsLink: {
+    color: colors.buttonText,
+  },
 });

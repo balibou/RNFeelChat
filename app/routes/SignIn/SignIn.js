@@ -33,6 +33,7 @@ class SignIn extends Component {
           />
           <TextInput
             ref={(input) => { this.textInput = input; }}
+            onChangeText={(phoneNumber) => navigator.props.changePhone('PHONETYPING', phoneNumber)}
             style={styles.phoneInput}
             placeholder='Your phone number'
             keyboardType='numeric'
@@ -46,7 +47,8 @@ class SignIn extends Component {
         </View>
         <View style={styles.textInfos}>
           <Text style={styles.terms}>
-            By signing up,{'\n'} you agree to the Terms of Service.
+            By signing up,{'\n'} you agree to the
+            <Text style={styles.termsLink}> Terms of Service</Text>.
           </Text>
         </View>
       </View>

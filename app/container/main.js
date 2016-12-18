@@ -8,6 +8,7 @@ import Loading from '../components/Loading';
 import settings from '../config/settings';
 import LoggedOut from '../layouts/LoggedOut';
 import * as countryActions from '../actions/countryActions';
+import * as phoneActions from '../actions/phoneActions';
 
 class App extends Component {
   componentWillMount() {
@@ -40,9 +41,11 @@ const MeteorContainer = createContainer(() => {
 
 export default connect(state => ({
   selectedCountry: state.Country.selectedCountry,
+  phoneNumber: state.phone.phoneNumber,
 }),
   (dispatch) => ({
     countryActions: bindActionCreators(countryActions, dispatch),
+    phoneActions: bindActionCreators(phoneActions, dispatch),
   })
 )(MeteorContainer);
 
