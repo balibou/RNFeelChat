@@ -1,6 +1,7 @@
 import React from 'react';
 import SignIn from '../routes/SignIn';
 import Button from '../components/Button';
+import Country from '../routes/Country';
 
 export const routes = {
   getSignInRoute() {
@@ -19,6 +20,19 @@ export const routes = {
         return (
           <Button text='Next' onPress={() => { console.log('Tapped right button'); }} />
         );
+      },
+    };
+  },
+  getCountryRoute() {
+    return {
+      renderScene(navigator) {
+        return <Country navigator={navigator} />;
+      },
+
+      showNavigationBar: true,
+
+      getTitle() {
+        return 'Country';
       },
     };
   },

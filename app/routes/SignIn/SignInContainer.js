@@ -5,7 +5,7 @@ class SignInContainer extends Component {
   render() {
     return (
       <SignIn
-        {...this.state}
+        {...this.props}
       />
     );
   }

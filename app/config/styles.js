@@ -3,4 +3,5 @@ export const colors = {
   buttonText: '#007AFF',
   borderBottomColor: '#ededed',
   colorInstructions: '#8f969e',
+  underlayColor: '#ededed',
 };
