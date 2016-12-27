@@ -41,13 +41,26 @@ export default StyleSheet.create({
     color: colors.colorInstructions,
   },
   terms: {
-    padding: 28,
+    alignItems: 'center',
+    paddingTop: 28,
+    textAlign: 'center',
+    fontSize: 16,
+    fontWeight: '500',
+    color: 'black',
+  },
+  terms2: {
+    alignItems: 'center',
     textAlign: 'center',
     fontSize: 16,
     fontWeight: '500',
     color: 'black',
   },
   termsLink: {
+    fontSize: 16,
+    fontWeight: '500',
     color: colors.buttonText,
+  },
+  termsSecondLine: {
+    flexDirection: 'row',
   },
 });
