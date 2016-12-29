@@ -1,9 +1,11 @@
 import React from 'react';
-import { Alert } from 'react-native';
+import { Alert, View, Text } from 'react-native';
 import SignIn from '../routes/SignIn';
 import Button from '../components/Button';
 import Country from '../routes/Country';
-import { createUserWithPhone } from '../lib/accounts-phone/phone_client';
+import { createUserWithPhone, verifyPhone } from '../lib/accounts-phone/phone_client';
+import Code from '../routes/Code';
+import { styles } from './styles';
 
 export const routes = {
   getSignInRoute() {
@@ -24,12 +26,67 @@ export const routes = {
 
       renderRightButton(navigator) {
         const { phoneCode } = navigator.props.selectedCountry;
-        const { phoneNumber } = navigator.props;
+        const { phoneNumber, connected } = navigator.props;
+        const internationalPhoneNumber = phoneCode + phoneNumber;
         const callback = (err, res) => {
-          if (err.error === 400) {
+          if (err && err.error === 400) {
             Alert.alert('Invalid phone number. Please try again.');
           }
           // User already existing
+          if (err && err.error === 403) {
+            Alert.alert(err.reason);
+          }
+          if (res) {
+            const codeRoute = routes.getCodeRoute(internationalPhoneNumber);
+            navigator.push(codeRoute);
+          }
+        };
+        return (
+          <Button
+            text='Next'
+            onPress={() => {
+              if (connected) {
+                createUserWithPhone({ phone: `${internationalPhoneNumber}` }, callback);
+              } else {
+                Alert.alert('No connection to server. Please try again.');
+              }
+            }}
+          />
+        );
+      },
+
+      renderLeftButton() {
+        return null;
+      },
+    };
+  },
+  getCodeRoute(internationalPhone) {
+    return {
+      renderScene(navigator) {
+        return (
+          <Code
+            navigator={navigator}
+          />
+        );
+      },
+
+      showNavigationBar: true,
+
+      renderTitle() {
+        return (
+        <View style={styles.codeRouteTitle}>
+            <Text style={styles.codeRouteTitleText}>{internationalPhone}</Text>
+          </View>
+        );
+      },
+
+      getTitle() {
+        return internationalPhone;
+      },
+
+      renderRightButton(navigator) {
+        const { codeTyped, connected } = navigator.props;
+        const callback = (err, res) => {
           if (err.error === 403) {
             Alert.alert(err.reason);
           }
@@ -39,14 +96,14 @@ export const routes = {
           <Button
             text='Next'
             onPress={() => {
-              createUserWithPhone({ phone: `${phoneCode}${phoneNumber}` }, callback);
+              if (connected) {
+                verifyPhone(internationalPhone, codeTyped, callback);
+              } else {
+                Alert.alert('No connection to server. Please try again.');
+              }
             }}
           />
         );
-      },
-
-      renderLeftButton() {
-        return null;
       },
     };
   },

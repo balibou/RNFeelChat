@@ -9,6 +9,7 @@ import settings from '../config/settings';
 import LoggedOut from '../layouts/LoggedOut';
 import * as countryActions from '../actions/countryActions';
 import * as phoneActions from '../actions/phoneActions';
+import * as codeActions from '../actions/codeActions';
 
 class App extends Component {
   componentWillMount() {
@@ -17,7 +18,7 @@ class App extends Component {
 
   render() {
     const { user, loggingIn } = this.props;
-    const status = Meteor.status();
+    const { connected, status } = Meteor.status();
 
     if (status.connected === false || loggingIn) {
       return <Loading />;
@@ -28,7 +29,7 @@ class App extends Component {
         </View>
       );
     }
-    return <LoggedOut {...this.props} />;
+    return <LoggedOut {...this.props} connected={connected} />;
   }
 }
 
@@ -42,10 +43,12 @@ const MeteorContainer = createContainer(() => {
 export default connect(state => ({
   selectedCountry: state.Country.selectedCountry,
   phoneNumber: state.phone.phoneNumber,
+  codeTyped: state.code.codeTyped,
 }),
   (dispatch) => ({
     countryActions: bindActionCreators(countryActions, dispatch),
     phoneActions: bindActionCreators(phoneActions, dispatch),
+    codeActions: bindActionCreators(codeActions, dispatch),
   })
 )(MeteorContainer);
 

@@ -4,7 +4,7 @@ import { colors } from '../../config/styles';
 export default StyleSheet.create({
   countryContainer: {
     marginLeft: 20,
-    paddingVertical: 14,
+    paddingVertical: 16,
   },
   countryAndCodePhoneTitle: {
     fontSize: 20,

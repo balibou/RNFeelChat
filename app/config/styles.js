@@ -5,3 +5,15 @@ export const colors = {
   colorInstructions: '#8f969e',
   underlayColor: '#ededed',
 };
+
+export const styles = {
+  codeRouteTitle: {
+    height: 100,
+    padding: 11,
+  },
+  codeRouteTitleText: {
+    paddingTop: 43,
+    fontSize: 21,
+    fontWeight: '400',
+  },
+};
