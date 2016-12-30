@@ -20,15 +20,15 @@ class App extends Component {
     const { user, loggingIn } = this.props;
     const { connected, status } = Meteor.status();
 
-    if (status.connected === false || loggingIn) {
-      return <Loading />;
-    } else if (user !== null) {
-      return (
-        <View style={styles.container}>
-          <Text>LoggedIn</Text>
-        </View>
-      );
-    }
+    // if (status.connected === false || loggingIn) {
+    //   return <Loading />;
+    // } else if (user !== null) {
+    //   return (
+    //     <View style={styles.container}>
+    //       <Text>LoggedIn</Text>
+    //     </View>
+    //   );
+    // }
     return <LoggedOut {...this.props} connected={connected} />;
   }
 }

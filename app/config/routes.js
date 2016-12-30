@@ -8,6 +8,8 @@ import { createUserWithPhone, verifyPhone } from '../lib/accounts-phone/phone_cl
 import Code from '../routes/Code';
 import { styles } from './styles';
 import { settings } from './settings';
+import Info from '../routes/Info';
+
 
 const Data = Meteor.getData();
 
@@ -103,6 +105,8 @@ export const routes = {
             AsyncStorage.setItem(settings.USER_TOKEN_KEY, res.token);
             Data._tokenIdSaved = res.token;
             Meteor._userIdSaved = res.id;
+            const infoRoute = routes.getInfoRoute();
+            navigator.push(infoRoute);
           }
         };
         return (
@@ -134,6 +138,34 @@ export const routes = {
 
       getTitle() {
         return 'Country';
+      },
+    };
+  },
+  getInfoRoute() {
+    return {
+      renderScene(navigator) {
+        return (
+          <Info
+            navigator={navigator}
+          />
+        );
+      },
+
+      showNavigationBar: true,
+
+      getTitle() {
+        return 'Your Info';
+      },
+
+      renderRightButton() {
+        return (
+          <Button
+            text='Next'
+            onPress={() => {
+              console.log('click');
+            }}
+          />
+        );
       },
     };
   },
