@@ -4,6 +4,7 @@ export const colors = {
   borderBottomColor: '#ededed',
   colorInstructions: '#8f969e',
   underlayColor: '#ededed',
+  textInCircle: '#C7C7CD',
 };
 
 export const styles = {
