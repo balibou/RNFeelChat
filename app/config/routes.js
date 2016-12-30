@@ -1,11 +1,15 @@
 import React from 'react';
-import { Alert, View, Text } from 'react-native';
+import { Alert, View, Text, AsyncStorage } from 'react-native';
+import Meteor from 'react-native-meteor';
 import SignIn from '../routes/SignIn';
 import Button from '../components/Button';
 import Country from '../routes/Country';
 import { createUserWithPhone, verifyPhone } from '../lib/accounts-phone/phone_client';
 import Code from '../routes/Code';
 import { styles } from './styles';
+import { settings } from './settings';
+
+const Data = Meteor.getData();
 
 export const routes = {
   getSignInRoute() {
@@ -37,6 +41,9 @@ export const routes = {
             Alert.alert(err.reason);
           }
           if (res) {
+            AsyncStorage.setItem(settings.USER_TOKEN_KEY, res.token);
+            Data._tokenIdSaved = res.token;
+            Meteor._userIdSaved = res.id;
             const codeRoute = routes.getCodeRoute(internationalPhoneNumber);
             navigator.push(codeRoute);
           }
@@ -87,10 +94,16 @@ export const routes = {
       renderRightButton(navigator) {
         const { codeTyped, connected } = navigator.props;
         const callback = (err, res) => {
-          if (err.error === 403) {
+          if (err && err.error === 403 && err.reason === 'Code is must be provided to method') {
+            Alert.alert('Code must be provided');
+          } else if (err && err.error === 403) {
             Alert.alert(err.reason);
           }
-          if (res) { console.log(res); }
+          if (res) {
+            AsyncStorage.setItem(settings.USER_TOKEN_KEY, res.token);
+            Data._tokenIdSaved = res.token;
+            Meteor._userIdSaved = res.id;
+          }
         };
         return (
           <Button
