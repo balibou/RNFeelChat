@@ -4,36 +4,45 @@ import Meteor, { createContainer } from 'react-native-meteor';
 import React, { Component } from 'react';
 import { View, StyleSheet, Text } from 'react-native';
 
-import Loading from '../components/Loading';
 import settings from '../config/settings';
 import LoggedOut from '../layouts/LoggedOut';
 import * as countryActions from '../actions/countryActions';
 import * as phoneActions from '../actions/phoneActions';
 import * as codeActions from '../actions/codeActions';
+import * as firstNameActions from '../actions/firstNameActions';
+import * as lastNameActions from '../actions/lastNameActions';
+import * as tokenActions from '../actions/tokenActions';
+import { loadInitialTokenState } from '../config/loadInitialTokenState';
 
 class App extends Component {
   componentWillMount() {
     Meteor.connect(settings.METEOR_URL);
   }
 
-  render() {
-    const { user, loggingIn } = this.props;
-    const { connected, status } = Meteor.status();
+  componentWillUpdate() {
+    const { changeTokenStates } = this.props.tokenActions;
+    loadInitialTokenState(changeTokenStates).done();
+  }
 
-    // if (status.connected === false || loggingIn) {
-    //   return <Loading />;
-    // } else if (user !== null) {
-    //   return (
-    //     <View style={styles.container}>
-    //       <Text>LoggedIn</Text>
-    //     </View>
-    //   );
-    // }
-    return <LoggedOut {...this.props} connected={connected} />;
+  render() {
+    const { existingToken, loadingToken } = this.props;
+    const { connected } = Meteor.status();
+
+    if (existingToken && !loadingToken) {
+      return (
+        <View style={styles.container}>
+          <Text>LoggedIn</Text>
+        </View>
+      );
+    } else if (!existingToken && !loadingToken) {
+      return <LoggedOut {...this.props} connected={connected} />;
+    }
+    return <View></View>;
   }
 }
 
 const MeteorContainer = createContainer(() => {
+  Meteor.subscribe('userData');
   return {
     user: Meteor.user(),
     loggingIn: Meteor.loggingIn(),
@@ -44,11 +53,18 @@ export default connect(state => ({
   selectedCountry: state.Country.selectedCountry,
   phoneNumber: state.phone.phoneNumber,
   codeTyped: state.code.codeTyped,
+  firstNameTyped: state.firstName.firstNameTyped,
+  lastNameTyped: state.lastName.lastNameTyped,
+  existingToken: state.token.existingToken,
+  loadingToken: state.token.loadingToken,
 }),
   (dispatch) => ({
     countryActions: bindActionCreators(countryActions, dispatch),
     phoneActions: bindActionCreators(phoneActions, dispatch),
     codeActions: bindActionCreators(codeActions, dispatch),
+    firstNameActions: bindActionCreators(firstNameActions, dispatch),
+    lastNameActions: bindActionCreators(lastNameActions, dispatch),
+    tokenActions: bindActionCreators(tokenActions, dispatch),
   })
 )(MeteorContainer);
 
@@ -62,4 +78,7 @@ App.propTypes = {
   status: React.PropTypes.object,
   user: React.PropTypes.object,
   loggingIn: React.PropTypes.bool,
+  existingToken: React.PropTypes.bool,
+  loadingToken: React.PropTypes.bool,
+  changeTokenStates: React.PropTypes.func,
 };

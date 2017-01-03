@@ -1,24 +1,50 @@
 import React, { Component } from 'react';
-import { Text, View, TextInput } from 'react-native';
+import { Text, View, TextInput, Image } from 'react-native';
+import ImagePicker from 'react-native-image-crop-picker';
+import Meteor from 'react-native-meteor';
 import styles from './styles';
 
 class Info extends Component {
 
   render() {
-    // const { navigator } = this.props;
+    const { user, changeFirstName, changeLastName } = this.props.navigator.props;
     return (
       <View style={styles.infoContainer}>
         <View style={styles.infoBlock}>
           <View style={styles.profilePicBlock}>
-            <View style={styles.circleBlock}>
-              <Text style={styles.textCircleBlock}>Add{'\n'}photo</Text>
-            </View>
+            {user.profilePic ?
+              <Image
+                style={styles.circleBlock}
+                source={{ uri: user.profilePic }}
+              />
+            :
+              <View style={styles.circleBlock}>
+                <Text
+                  style={styles.textCircleBlock}
+                  onPress={ () => {
+                    ImagePicker.openPicker({
+                      width: 150,
+                      height: 150,
+                      cropping: true,
+                      cropperCircleOverlay: true,
+                    }).then(image => {
+                      Meteor.call('pic.insert', {
+                        localPicSelected: image.path,
+                      });
+                    });
+                  }}>
+                    Add{'\n'}photo
+                </Text>
+              </View>
+            }
           </View>
           <View style={styles.inputBlock}>
             <View style={styles.inputContainer}>
               <TextInput
                 ref={(firstName) => { this.firstNameTextInput = firstName; }}
-                // onChangeText={(codeTyped) => navigator.props.changeCode('CODETYPING', codeTyped)}
+                onChangeText={(firstNameTyped) =>
+                  changeFirstName('FIRSTNAMETYPING', firstNameTyped)
+                }
                 style={styles.nameInput}
                 placeholder='First name'
                 keyboardType='default'
@@ -30,7 +56,9 @@ class Info extends Component {
             <View style={styles.inputContainer}>
               <TextInput
                 ref={(lastName) => { this.lastNameTextInput = lastName; }}
-                // onChangeText={(codeTyped) => navigator.props.changeCode('CODETYPING', codeTyped)}
+                onChangeText={(lastNameTyped) =>
+                  changeLastName('LASTNAMETYPING', lastNameTyped)
+                }
                 style={styles.nameInput}
                 placeholder='Last name'
                 keyboardType='default'
@@ -49,8 +77,12 @@ class Info extends Component {
   }
 }
 
-// Info.propTypes = {
-//   navigator: React.PropTypes.object,
-// };
+Info.propTypes = {
+  navigator: React.PropTypes.object,
+  props: React.PropTypes.object,
+  user: React.PropTypes.object,
+  changeFirstName: React.PropTypes.func,
+  changeLastName: React.PropTypes.func,
+};
 
 export default Info;

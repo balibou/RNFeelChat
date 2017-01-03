@@ -157,12 +157,20 @@ export const routes = {
         return 'Your Info';
       },
 
-      renderRightButton() {
+      renderRightButton(navigator) {
+        const { firstNameTyped, lastNameTyped } = navigator.props;
         return (
           <Button
             text='Next'
             onPress={() => {
-              console.log('click');
+              Meteor.call('names.insert', {
+                firstName: firstNameTyped,
+                lastName: lastNameTyped,
+              }, (err, res) => {
+                if (res) {
+                  AsyncStorage.setItem(settings.USER_ALREADY_SIGNED_UP, 'true');
+                }
+              });
             }}
           />
         );

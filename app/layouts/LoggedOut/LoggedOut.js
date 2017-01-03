@@ -11,6 +11,11 @@ const LoggedOut = ({
   connected,
   codeActions,
   codeTyped,
+  user,
+  firstNameActions,
+  firstNameTyped,
+  lastNameActions,
+  lastNameTyped,
 }) => {
   const route = Routes.getSignInRoute();
   return (
@@ -28,6 +33,11 @@ const LoggedOut = ({
       connected={connected}
       changeCode={codeActions.changeCode}
       codeTyped={codeTyped}
+      user={user}
+      changeFirstName={firstNameActions.changeFirstName}
+      firstNameTyped={firstNameTyped}
+      changeLastName={lastNameActions.changeLastName}
+      lastNameTyped={lastNameTyped}
     />
   );
 };
@@ -40,6 +50,11 @@ LoggedOut.propTypes = {
   connected: React.PropTypes.bool,
   codeActions: React.PropTypes.object,
   codeTyped: React.PropTypes.string,
+  user: React.PropTypes.object,
+  firstNameActions: React.PropTypes.object,
+  firstNameTyped: React.PropTypes.string,
+  lastNameActions: React.PropTypes.object,
+  lastNameTyped: React.PropTypes.string,
 };
 
 export default LoggedOut;
