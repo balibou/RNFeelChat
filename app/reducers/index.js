@@ -5,6 +5,7 @@ import code from './code';
 import firstName from './firstName';
 import lastName from './lastName';
 import token from './token';
+import navBar from './navBar';
 
 export {
   counter,
@@ -14,4 +15,5 @@ export {
   firstName,
   lastName,
   token,
+  navBar,
 };

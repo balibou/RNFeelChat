@@ -40,6 +40,8 @@
 		E602392F1E16CCA6004C718F /* RSKImageCropper.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = E602392B1E16CC44004C718F /* RSKImageCropper.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		E60239321E16CCB6004C718F /* QBImagePicker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E60239311E16CCB6004C718F /* QBImagePicker.framework */; };
 		E60239331E16CCB6004C718F /* QBImagePicker.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = E60239311E16CCB6004C718F /* QBImagePicker.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		E6664C811E1C60040062AE02 /* RNUnifiedContacts.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6664C7F1E1C60040062AE02 /* RNUnifiedContacts.swift */; };
+		E6664C821E1C60040062AE02 /* RNUnifiedContactsBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = E6664C801E1C60040062AE02 /* RNUnifiedContactsBridge.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -252,6 +254,9 @@
 		E602392A1E16CC44004C718F /* QBImagePicker.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = QBImagePicker.framework; sourceTree = "<group>"; };
 		E602392B1E16CC44004C718F /* RSKImageCropper.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = RSKImageCropper.framework; sourceTree = "<group>"; };
 		E60239311E16CCB6004C718F /* QBImagePicker.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = QBImagePicker.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		E6664C7E1E1C60040062AE02 /* RNUnifiedContacts-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "RNUnifiedContacts-Bridging-Header.h"; sourceTree = "<group>"; };
+		E6664C7F1E1C60040062AE02 /* RNUnifiedContacts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RNUnifiedContacts.swift; sourceTree = "<group>"; };
+		E6664C801E1C60040062AE02 /* RNUnifiedContactsBridge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNUnifiedContactsBridge.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -487,6 +492,7 @@
 		E60239281E16CC21004C718F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				E6664C7D1E1C60040062AE02 /* RNUnifiedContacts */,
 				E60239291E16CC44004C718F /* ImageCropPickerSDK */,
 			);
 			name = Frameworks;
@@ -507,6 +513,17 @@
 				E66027091E0586B9000B05A8 /* libRNVectorIcons.a */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		E6664C7D1E1C60040062AE02 /* RNUnifiedContacts */ = {
+			isa = PBXGroup;
+			children = (
+				E6664C7E1E1C60040062AE02 /* RNUnifiedContacts-Bridging-Header.h */,
+				E6664C7F1E1C60040062AE02 /* RNUnifiedContacts.swift */,
+				E6664C801E1C60040062AE02 /* RNUnifiedContactsBridge.m */,
+			);
+			name = RNUnifiedContacts;
+			path = "../node_modules/react-native-unified-contacts/RNUnifiedContacts";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -561,10 +578,12 @@
 					00E356ED1AD99517003FC87E = {
 						CreatedOnToolsVersion = 6.2;
 						DevelopmentTeam = 9Y77MU2WMK;
+						LastSwiftMigration = 0820;
 						TestTargetID = 13B07F861A680F5B00A75B9A;
 					};
 					13B07F861A680F5B00A75B9A = {
 						DevelopmentTeam = 9Y77MU2WMK;
+						LastSwiftMigration = 0820;
 					};
 				};
 			};
@@ -848,7 +867,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E6664C821E1C60040062AE02 /* RNUnifiedContactsBridge.m in Sources */,
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
+				E6664C811E1C60040062AE02 /* RNUnifiedContacts.swift in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -879,6 +900,7 @@
 		00E356F61AD99517003FC87E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				DEVELOPMENT_TEAM = 9Y77MU2WMK;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -895,6 +917,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/RNFeelChat.app/RNFeelChat";
 			};
 			name = Debug;
@@ -902,6 +925,7 @@
 		00E356F71AD99517003FC87E /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
 				DEVELOPMENT_TEAM = 9Y77MU2WMK;
@@ -915,6 +939,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/RNFeelChat.app/RNFeelChat";
 			};
 			name = Release;
@@ -940,6 +965,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = RNFeelChat;
+				SWIFT_VERSION = 3.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
@@ -964,6 +990,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = RNFeelChat;
+				SWIFT_VERSION = 3.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;

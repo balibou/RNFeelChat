@@ -6,12 +6,15 @@ import { View, StyleSheet, Text } from 'react-native';
 
 import settings from '../config/settings';
 import LoggedOut from '../layouts/LoggedOut';
+import LoggedIn from '../layouts/LoggedIn';
+import SignedIn from '../layouts/SignedIn';
 import * as countryActions from '../actions/countryActions';
 import * as phoneActions from '../actions/phoneActions';
 import * as codeActions from '../actions/codeActions';
 import * as firstNameActions from '../actions/firstNameActions';
 import * as lastNameActions from '../actions/lastNameActions';
 import * as tokenActions from '../actions/tokenActions';
+import * as navBarActions from '../actions/navBarActions';
 import { loadInitialTokenState } from '../config/loadInitialTokenState';
 
 class App extends Component {
@@ -29,15 +32,11 @@ class App extends Component {
     const { connected } = Meteor.status();
 
     if (existingToken && !loadingToken) {
-      return (
-        <View style={styles.container}>
-          <Text>LoggedIn</Text>
-        </View>
-      );
+      return <LoggedIn {...this.props} connected={connected} />;
     } else if (!existingToken && !loadingToken) {
       return <LoggedOut {...this.props} connected={connected} />;
     }
-    return <View></View>;
+    return <SignedIn />;
   }
 }
 
@@ -57,6 +56,7 @@ export default connect(state => ({
   lastNameTyped: state.lastName.lastNameTyped,
   existingToken: state.token.existingToken,
   loadingToken: state.token.loadingToken,
+  selectedTab: state.navBar.selectedTab,
 }),
   (dispatch) => ({
     countryActions: bindActionCreators(countryActions, dispatch),
@@ -65,6 +65,7 @@ export default connect(state => ({
     firstNameActions: bindActionCreators(firstNameActions, dispatch),
     lastNameActions: bindActionCreators(lastNameActions, dispatch),
     tokenActions: bindActionCreators(tokenActions, dispatch),
+    navBarActions: bindActionCreators(navBarActions, dispatch),
   })
 )(MeteorContainer);
 

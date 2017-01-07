@@ -9,6 +9,8 @@ import Code from '../routes/Code';
 import { styles } from './styles';
 import { settings } from './settings';
 import Info from '../routes/Info';
+import NavBar from '../routes/NavBar';
+import Loading from '../components/Loading'
 
 
 const Data = Meteor.getData();
@@ -138,6 +140,49 @@ export const routes = {
 
       getTitle() {
         return 'Country';
+      },
+    };
+  },
+  getSignedInRoute() {
+    return {
+      renderScene() {
+        return <View></View>;
+      },
+
+      showNavigationBar: true,
+    };
+  },
+  getNavBarRoute() {
+    return {
+      renderScene(navigator) {
+        return (
+          <NavBar
+            navigator={navigator}
+          />
+        );
+      },
+
+      showNavigationBar: true,
+
+      getTitle(navigator) {
+        const { connected, loggingIn, selectedTab } = navigator.props;
+        if (!connected) {
+          return (
+            <View style={styles.navBarRouteTitleNotConnected}>
+              <Loading size='small'/>
+              <Text style={styles.navBarRouteTitleText}>Waiting for network</Text>
+            </View>
+          );
+        }
+        if (connected && loggingIn) {
+          return (
+            <View style={styles.navBarRouteTitleConnectedLoggingIn}>
+              <Loading size='small'/>
+              <Text style={styles.navBarRouteTitleText}>Connecting ...</Text>
+            </View>
+          );
+        }
+        return selectedTab;
       },
     };
   },
