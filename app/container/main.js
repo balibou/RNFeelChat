@@ -15,6 +15,7 @@ import * as firstNameActions from '../actions/firstNameActions';
 import * as lastNameActions from '../actions/lastNameActions';
 import * as tokenActions from '../actions/tokenActions';
 import * as navBarActions from '../actions/navBarActions';
+import * as contactsActions from '../actions/contactsActions';
 import { loadInitialTokenState } from '../config/loadInitialTokenState';
 
 class App extends Component {
@@ -36,7 +37,7 @@ class App extends Component {
     } else if (!existingToken && !loadingToken) {
       return <LoggedOut {...this.props} connected={connected} />;
     }
-    return <SignedIn />;
+    return <SignedIn />; // pas SignedIn mais Loading ...
   }
 }
 
@@ -57,6 +58,7 @@ export default connect(state => ({
   existingToken: state.token.existingToken,
   loadingToken: state.token.loadingToken,
   selectedTab: state.navBar.selectedTab,
+  contacts: state.contacts,
 }),
   (dispatch) => ({
     countryActions: bindActionCreators(countryActions, dispatch),
@@ -66,6 +68,7 @@ export default connect(state => ({
     lastNameActions: bindActionCreators(lastNameActions, dispatch),
     tokenActions: bindActionCreators(tokenActions, dispatch),
     navBarActions: bindActionCreators(navBarActions, dispatch),
+    contactsActions: bindActionCreators(contactsActions, dispatch),
   })
 )(MeteorContainer);
 

@@ -6,6 +6,7 @@ import firstName from './firstName';
 import lastName from './lastName';
 import token from './token';
 import navBar from './navBar';
+import contacts from './contacts';
 
 export {
   counter,
@@ -16,4 +17,5 @@ export {
   lastName,
   token,
   navBar,
+  contacts,
 };

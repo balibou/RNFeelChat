@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Text, View } from 'react-native';
 import { Tabs, Tab, Icon } from 'react-native-elements';
 import styles from './styles';
+import Contacts from '../Contacts';
 
 class NavBar extends Component {
   render() {
@@ -17,7 +18,7 @@ class NavBar extends Component {
           selectedTitleStyle={styles.selectedTitleStyle}
           onPress={() => changeTab('contacts')}
         >
-        <View><Text>CONTACTS</Text></View>
+        <Contacts {...this.props}/>
         </Tab>
         <Tab
           selected={selectedTab === 'Chats'}
