@@ -2,12 +2,36 @@ import React, { Component } from 'react';
 import { View, ScrollView } from 'react-native';
 import { List, ListItem, SearchBar } from 'react-native-elements';
 import styles from './styles';
-import { setContactsListProp } from '../../config/setContactsList';
+import { setContactsListProp, setContactsListAsyncstorage } from '../../config/setContactsList';
 
 class Contacts extends Component {
   componentWillMount() {
     const { changeContactsList } = this.props.navigator.props;
     setContactsListProp(changeContactsList).done();
+  }
+
+  componentDidMount() {
+    const {
+      changeContactsList,
+      filteredContactsList,
+      filteredText,
+      connected,
+      user,
+    } = this.props.navigator.props;
+
+    this.timer = setInterval(() => {
+      setContactsListAsyncstorage(
+        changeContactsList,
+        filteredContactsList,
+        filteredText,
+        connected,
+        user
+      ).done();
+    }, 5000);
+  }
+
+  componentWillUnmount() {
+    clearTimeout(this.timer);
   }
 
   render() {
@@ -52,10 +76,12 @@ class Contacts extends Component {
 
 Contacts.propTypes = {
   navigator: React.PropTypes.object,
-  selectedTab: React.PropTypes.string,
-  changeTab: React.PropTypes.func,
   changeContactsList: React.PropTypes.func,
   contacts: React.PropTypes.object,
+  filteredContactsList: React.PropTypes.array,
+  filteredText: React.PropTypes.string,
+  connected: React.PropTypes.bool,
+  user: React.PropTypes.object,
 };
 
 export default Contacts;

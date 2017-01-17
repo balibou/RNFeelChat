@@ -11,11 +11,12 @@ const LoggedIn = ({
   loggingIn,
   contactsActions,
   contacts,
+  user,
 }) => {
   const route = Routes.getNavBarRoute();
   const { changeContactsList } = contactsActions;
   const { filteredContactsList, filteredText } = contacts;
-  setContactsListAsyncstorage(changeContactsList, filteredContactsList, filteredText).done();
+  setContactsListAsyncstorage(changeContactsList, filteredContactsList, filteredText, connected, user).done();
   return (
     <ExNavigator
       initialRoute={route}
@@ -30,6 +31,8 @@ const LoggedIn = ({
       loggingIn={loggingIn}
       changeContactsList={changeContactsList}
       contacts={contacts}
+      filteredText={filteredText}
+      user={user}
     />
   );
 };
@@ -41,6 +44,7 @@ LoggedIn.propTypes = {
   loggingIn: React.PropTypes.bool,
   contactsActions: React.PropTypes.object,
   contacts: React.PropTypes.object,
+  user: React.PropTypes.object,
 };
 
 export default LoggedIn;
