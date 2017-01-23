@@ -1,6 +1,7 @@
 import { AsyncStorage } from 'react-native';
 import Contacts from 'react-native-unified-contacts';
 import Meteor from 'react-native-meteor';
+import { diff, observableDiff, applyChange } from 'deep-diff';
 import { sortByFamilyName } from './methods';
 
 export const setContactsListProp = async (changeContactsList, filteredContactsList, filteredText) => {
@@ -18,6 +19,24 @@ export const setContactsListProp = async (changeContactsList, filteredContactsLi
   }
 };
 
+export const updateMeteorContacts = (
+  sortedAsyncstorageResult,
+  changeContactsList,
+  filteredContactsList,
+  filteredText
+) => {
+  Meteor.call(
+    'contacts.update',
+    { contacts: sortedAsyncstorageResult },
+    (err, res) => {
+      if (res) {
+        AsyncStorage.setItem('contactsList', JSON.stringify(res));
+        setContactsListProp(changeContactsList, filteredContactsList, filteredText);
+      }
+    }
+  );
+};
+
 export const setContactsListAsyncstorage = async (changeContactsList, filteredContactsList, filteredText, connected, user) => {
   try {
     Contacts.getContacts((error, contacts) => {
@@ -31,17 +50,43 @@ export const setContactsListAsyncstorage = async (changeContactsList, filteredCo
           }
           const sortedAsyncstorageResult = JSON.parse(result).sort(sortByFamilyName);
 
-          if (JSON.stringify(sortedAsyncstorageResult) !== JSON.stringify(sortedPhoneContacts)) {
+          if (sortedPhoneContacts.length !== sortedAsyncstorageResult.length) {
             AsyncStorage.setItem('contactsList', JSON.stringify(sortedPhoneContacts));
             setContactsListProp(changeContactsList, filteredContactsList, filteredText);
           }
 
+          sortedPhoneContacts.map((phoneContact) => {
+            for (const sortedAsyncstorageItem of sortedAsyncstorageResult) {
+              if (sortedAsyncstorageItem.identifier === phoneContact.identifier) {
+                observableDiff(sortedAsyncstorageItem, phoneContact, (difference) => {
+                  // Apply all changes except those to the 'isFeelChatUser' property
+                  if (difference.path.join('.') !== `phoneNumbers.${difference.path[1]}.isFeelChatUser`) {
+                    applyChange(sortedAsyncstorageItem, phoneContact, difference);
+                    AsyncStorage.setItem('contactsList', JSON.stringify(sortedPhoneContacts));
+                    setContactsListProp(changeContactsList, filteredContactsList, filteredText);
+                  }
+                });
+                break;
+              }
+            }
+          });
+
           if (connected && user && user.contacts) {
             if (JSON.stringify(user.contacts) !== JSON.stringify(sortedAsyncstorageResult)) {
-              Meteor.call('contacts.update', { contacts: sortedAsyncstorageResult });
-            };
+              updateMeteorContacts(
+                sortedAsyncstorageResult,
+                changeContactsList,
+                filteredContactsList,
+                filteredText
+              );
+            }
           } else if (connected && user && !user.contacts) {
-            Meteor.call('contacts.insert', { contacts: sortedAsyncstorageResult });
+            updateMeteorContacts(
+              sortedAsyncstorageResult,
+              changeContactsList,
+              filteredContactsList,
+              filteredText
+            );
           }
         });
       }
