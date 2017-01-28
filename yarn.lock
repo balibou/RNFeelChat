@@ -3710,6 +3710,10 @@ react-native-scrollable-mixin@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/react-native-scrollable-mixin/-/react-native-scrollable-mixin-1.0.1.tgz#34a32167b64248594154fd0d6a8b03f22740548e"
 
+react-native-sms@^1.4.0:
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/react-native-sms/-/react-native-sms-1.4.0.tgz#904f79a30dd869be2f630e1129742f2e9298e469"
+
 react-native-tab-navigator@^0.3.3:
   version "0.3.3"
   resolved "https://registry.yarnpkg.com/react-native-tab-navigator/-/react-native-tab-navigator-0.3.3.tgz#b222bad21fbe773c8d28f9a0de30ce62b08724d3"

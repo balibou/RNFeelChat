@@ -1,14 +1,42 @@
 import React, { Component } from 'react';
-import { Text, View } from 'react-native';
+import { Text, View, ActionSheetIOS } from 'react-native';
 import UserAvatar from 'react-native-user-avatar';
 import { List, ListItem } from 'react-native-elements';
+import SendSMS from 'react-native-sms';
 import styles from './styles';
 
 class ContactProfilePage extends Component {
 
+  sms({digits}) {
+    SendSMS.send({
+      body: 'Try FeelChat!',
+      recipients: [`${digits}`],
+      successTypes: ['sent', 'queued'],
+    }, (completed, cancelled, error) => {
+      console.log('SMS Callback: completed: ' + completed + ' cancelled: ' + cancelled + 'error: ' + error);
+    });
+  }
+
+  showSendSmsSheet() {
+    const BUTTONS = [];
+    const { phoneNumbers } = this.props.contactSelected;
+    phoneNumbers.map(
+      ({ label, stringValue }) =>
+        BUTTONS.push(`${label} ${stringValue}`)
+    );
+    BUTTONS.push('Cancel');
+    const CANCEL_INDEX = BUTTONS.length;
+    ActionSheetIOS.showActionSheetWithOptions({
+      options: BUTTONS,
+      cancelButtonIndex: CANCEL_INDEX,
+    },
+    (buttonIndex) => {
+      this.sms(phoneNumbers[buttonIndex]);
+    });
+  }
+
   render() {
     const { phoneNumbers, fullName, isFeelChatUser } = this.props.contactSelected;
-    const contactSelectedPhoneNumbersList = phoneNumbers;
 
     return (
       <View style={styles.ContactProfilePageContainer}>
@@ -18,7 +46,7 @@ class ContactProfilePage extends Component {
         </View>
         <List containerStyle={styles.ContactProfilePagePhoneNumbersListContainer}>
           {
-            contactSelectedPhoneNumbersList.map(
+            phoneNumbers.map(
               ({ identifier, label, isFeelChatUser, stringValue, digits }) => (
                 <ListItem
                   key={identifier}
@@ -42,7 +70,7 @@ class ContactProfilePage extends Component {
               title='Invite to FeelChat'
               titleStyle={styles.ContactProfilePageFeelChatOptionsItemTitle}
               containerStyle={styles.ContactProfilePageFeelChatOptionsItemContainer}
-              onPress={() => console.log('Invite')}
+              onPress={() => this.showSendSmsSheet()}
               hideChevron
             />
           </List>
