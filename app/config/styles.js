@@ -39,4 +39,22 @@ export const styles = {
     fontSize: 16,
     fontWeight: '600',
   },
+  navBarOtherRouteTitleNotConnected: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: 20,
+    width: 70,
+    paddingTop: 10,
+  },
+  ContactProfilePageRouteLeftButtonView: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  ContactProfilePageRouteLeftButtonText: {
+    fontSize: 16,
+    fontWeight: '600',
+  },
 };

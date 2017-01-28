@@ -2,9 +2,11 @@ import React, { Component } from 'react';
 import { View, ScrollView } from 'react-native';
 import { List, ListItem, SearchBar } from 'react-native-elements';
 import styles from './styles';
+import Routes from '../../config/routes';
 
 class Contacts extends Component {
   render() {
+    const { navigator } = this.props;
     const { changeContactsList } = this.props.navigator.props;
     const { contactsList, filteredContactsList } = this.props.navigator.props.contacts;
 
@@ -31,9 +33,10 @@ class Contacts extends Component {
                     avatar={{ uri: `data:image/png;base64,${contact.thumbnailImageData}` }}
                     key={contact.identifier}
                     title={contact.fullName}
-                    // if contact.phoneNumbers.map(phone.isFeelChatUser) go on chat page
-                    // if not go on invite contact
-                    onPress={() => console.log(contact)}
+                    onPress={() => {
+                      const route = Routes.getContactProfilePageRoute(contact);
+                      navigator.push(route);
+                    }}
                   />
                 ))
               }

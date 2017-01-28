@@ -1,6 +1,7 @@
 import React from 'react';
 import { Alert, View, Text, AsyncStorage } from 'react-native';
 import Meteor from 'react-native-meteor';
+import { Icon } from 'react-native-elements';
 import SignIn from '../routes/SignIn';
 import Button from '../components/Button';
 import Country from '../routes/Country';
@@ -11,6 +12,7 @@ import { settings } from './settings';
 import Info from '../routes/Info';
 import NavBar from '../routes/NavBar';
 import Loading from '../components/Loading'
+import ContactProfilePage from '../routes/ContactProfilePage';
 
 
 const Data = Meteor.getData();
@@ -164,14 +166,27 @@ export const routes = {
 
       showNavigationBar: true,
 
-      getTitle(navigator) {
-        const { connected, loggingIn, selectedTab } = navigator.props;
-        if (!connected) {
+      renderNavTitle(selectedTab) {
+        if (selectedTab === 'Chats') {
           return (
             <View style={styles.navBarRouteTitleNotConnected}>
               <Loading size='small'/>
               <Text style={styles.navBarRouteTitleText}>Waiting for network</Text>
             </View>
+          );
+        }
+        return (
+          <View style={styles.navBarOtherRouteTitleNotConnected}>
+            <Text style={styles.navBarRouteTitleText}>{selectedTab}</Text>
+          </View>
+        );
+      },
+
+      getTitle(navigator) {
+        const { connected, loggingIn, selectedTab } = navigator.props;
+        if (!connected) {
+          return (
+            this.renderNavTitle(selectedTab)
           );
         }
         if (connected && loggingIn) {
@@ -218,6 +233,43 @@ export const routes = {
               });
             }}
           />
+        );
+      },
+    };
+  },
+  getContactProfilePageRoute(contactSelected) {
+    return {
+      renderScene(navigator) {
+        return (
+          <ContactProfilePage
+            navigator={navigator}
+            contactSelected={contactSelected}
+          />
+        );
+      },
+
+      showNavigationBar: true,
+
+      getTitle() {
+        return 'Infos';
+      },
+
+      renderLeftButton(navigator) {
+        const { selectedTab } = navigator.props;
+        return (
+          <View style={styles.ContactProfilePageRouteLeftButtonView}>
+            <Icon
+              name='chevron-left'
+              size={28}
+              onPress={() => navigator.pop()}
+            />
+            <Text
+              onPress={() => navigator.pop()}
+              style={styles.ContactProfilePageRouteLeftButtonText}
+            >
+              {selectedTab}
+            </Text>
+          </View>
         );
       },
     };

@@ -60,7 +60,10 @@ export const setContactsListAsyncstorage = async (changeContactsList, filteredCo
               if (sortedAsyncstorageItem.identifier === phoneContact.identifier) {
                 observableDiff(sortedAsyncstorageItem, phoneContact, (difference) => {
                   // Apply all changes except those to the 'isFeelChatUser' property
-                  if (difference.path.join('.') !== `phoneNumbers.${difference.path[1]}.isFeelChatUser`) {
+                  if (
+                    difference.path.join('.') !== `phoneNumbers.${difference.path[1]}.isFeelChatUser` &&
+                    difference.path.join('.') !== `isFeelChatUser`
+                  ) {
                     applyChange(sortedAsyncstorageItem, phoneContact, difference);
                     AsyncStorage.setItem('contactsList', JSON.stringify(sortedPhoneContacts));
                     setContactsListProp(changeContactsList, filteredContactsList, filteredText);
