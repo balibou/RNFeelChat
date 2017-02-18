@@ -4,16 +4,17 @@ import UserAvatar from 'react-native-user-avatar';
 import { List, ListItem } from 'react-native-elements';
 import SendSMS from 'react-native-sms';
 import styles from './styles';
+import Routes from '../../config/routes';
 
 class ContactProfilePage extends Component {
 
-  sms({digits}) {
+  sms({ digits }) {
     SendSMS.send({
       body: 'Try FeelChat!',
       recipients: [`${digits}`],
       successTypes: ['sent', 'queued'],
     }, (completed, cancelled, error) => {
-      console.log('SMS Callback: completed: ' + completed + ' cancelled: ' + cancelled + 'error: ' + error);
+      console.log(`SMS Callback: completed: ${completed} cancelled: ${cancelled} error: ${error}`);
     });
   }
 
@@ -25,18 +26,21 @@ class ContactProfilePage extends Component {
         BUTTONS.push(`${label} ${stringValue}`)
     );
     BUTTONS.push('Cancel');
-    const CANCEL_INDEX = BUTTONS.length;
+    const CANCEL_INDEX = BUTTONS.length - 1;
     ActionSheetIOS.showActionSheetWithOptions({
       options: BUTTONS,
       cancelButtonIndex: CANCEL_INDEX,
     },
     (buttonIndex) => {
-      this.sms(phoneNumbers[buttonIndex]);
+      if (buttonIndex !== CANCEL_INDEX) {
+        this.sms(phoneNumbers[buttonIndex]);
+      }
     });
   }
 
   render() {
     const { phoneNumbers, fullName, isFeelChatUser } = this.props.contactSelected;
+    const { navigator } = this.props;
 
     return (
       <View style={styles.ContactProfilePageContainer}>
@@ -47,14 +51,29 @@ class ContactProfilePage extends Component {
         <List containerStyle={styles.ContactProfilePagePhoneNumbersListContainer}>
           {
             phoneNumbers.map(
-              ({ identifier, label, isFeelChatUser, stringValue, digits }) => (
+              (contact) => (
                 <ListItem
-                  key={identifier}
-                  title={label}
-                  subtitle={isFeelChatUser ? stringValue : digits}
+                  key={contact.identifier}
+                  title={contact.label}
+                  subtitle={contact.isFeelChatUser ? contact.stringValue : contact.digits}
                   titleStyle={styles.ContactProfilePagePhoneNumbersItemTitle}
                   subtitleStyle={styles.ContactProfilePagePhoneNumbersItemSubtitle}
                   containerStyle={styles.ContactProfilePagePhoneNumbersItemContainer}
+                  rightIcon={
+                    contact.isFeelChatUser ?
+                      'chat-bubble-outline'
+                    :
+                      null
+                  }
+                  onPress={
+                    contact.isFeelChatUser ?
+                      () => {
+                        const route = Routes.getChatPageRoute(contact, fullName);
+                        navigator.push(route);
+                      }
+                    :
+                      null
+                    }
                 />
               )
             )
@@ -82,6 +101,7 @@ class ContactProfilePage extends Component {
 
 ContactProfilePage.propTypes = {
   contactSelected: React.PropTypes.object,
+  navigator: React.PropTypes.object,
 };
 
 export default ContactProfilePage;

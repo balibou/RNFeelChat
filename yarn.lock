@@ -1751,6 +1751,10 @@ eventemitter3@^1.1.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/eventemitter3/-/eventemitter3-1.2.0.tgz#1c86991d816ad1e504750e73874224ecf3bec508"
 
+events@^1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/events/-/events-1.1.1.tgz#9ebdb7635ad099c70dcc4c2a1f5004288e8bd924"
+
 exec-sh@^0.2.0:
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/exec-sh/-/exec-sh-0.2.0.tgz#14f75de3f20d286ef933099b2ce50a90359cef10"
@@ -2777,7 +2781,7 @@ json-stable-stringify@^1.0.0, json-stable-stringify@^1.0.1:
   dependencies:
     jsonify "~0.0.0"
 
-json-stringify-safe@~5.0.1:
+json-stringify-safe@^5.0.1, json-stringify-safe@~5.0.1:
   version "5.0.1"
   resolved "https://registry.yarnpkg.com/json-stringify-safe/-/json-stringify-safe-5.0.1.tgz#1296a2d58fd45f19a0f6ce01d65701e2c735b6eb"
 
@@ -2857,7 +2861,7 @@ load-json-file@^1.0.0:
     pinkie-promise "^2.0.0"
     strip-bom "^2.0.0"
 
-lodash-es@^4.2.1:
+lodash-es@^4.16.0, lodash-es@^4.2.1:
   version "4.17.4"
   resolved "https://registry.yarnpkg.com/lodash-es/-/lodash-es-4.17.4.tgz#dcc1d7552e150a0640073ba9cb31d70f032950e7"
 
@@ -3025,9 +3029,13 @@ lodash@^3.5.0:
   version "3.10.1"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-3.10.1.tgz#5bf45e8e49ba4189e17d482789dfd15bd140b7b6"
 
-lodash@^4.0.0, lodash@^4.13.1, lodash@^4.14.0, lodash@^4.16.6, lodash@^4.2.0, lodash@^4.2.1, lodash@^4.3.0, lodash@^4.6.1:
+lodash@^4.0.0, lodash@^4.11.1, lodash@^4.13.1, lodash@^4.14.0, lodash@^4.16.6, lodash@^4.2.0, lodash@^4.2.1, lodash@^4.3.0, lodash@^4.6.1:
   version "4.17.2"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.2.tgz#34a3055babe04ce42467b607d700072c7ff6bf42"
+
+lodash@^4.17.4:
+  version "4.17.4"
+  resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.4.tgz#78203a4d1c328ae1d86dca6460e369b57f4055ae"
 
 lodash@~2.4.1:
   version "2.4.2"
@@ -3264,6 +3272,10 @@ negotiator@0.5.3:
 negotiator@0.6.1:
   version "0.6.1"
   resolved "https://registry.yarnpkg.com/negotiator/-/negotiator-0.6.1.tgz#2b327184e8992101177b28563fb5e7102acd0ca9"
+
+next-frame@^0.2.3:
+  version "0.2.3"
+  resolved "https://registry.yarnpkg.com/next-frame/-/next-frame-0.2.3.tgz#58bee5d1213b31b3cf2c064685388118d32c4794"
 
 node-emoji@1.3.1:
   version "1.3.1"
@@ -3688,7 +3700,18 @@ react-native-loading-spinner-overlay@^0.3.0:
   version "0.3.0"
   resolved "https://registry.yarnpkg.com/react-native-loading-spinner-overlay/-/react-native-loading-spinner-overlay-0.3.0.tgz#3659c7c35523087e8db8f04c9e526d519f907b2b"
 
-react-native-meteor@^1.0.0-rc14:
+react-native-meteor-redux@^1.1.11:
+  version "1.1.11"
+  resolved "https://registry.yarnpkg.com/react-native-meteor-redux/-/react-native-meteor-redux-1.1.11.tgz#fe5cb598c43ebba8821e3b1f5eafd3c5e2f80643"
+  dependencies:
+    events "^1.1.1"
+    lodash "^4.17.4"
+    next-frame "^0.2.3"
+    react-native-meteor "^1.0.3"
+    redux "^3.6.0"
+    redux-persist "^4.0.1"
+
+react-native-meteor@^1.0.0-rc14, react-native-meteor@^1.0.3:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/react-native-meteor/-/react-native-meteor-1.0.3.tgz#335dc2e60ed941d968117eaeb06d2b5c8fb6a1e1"
   dependencies:
@@ -3933,6 +3956,14 @@ redux-actions@^0.12.0:
   dependencies:
     lodash "^4.13.1"
     reduce-reducers "^0.1.0"
+
+redux-persist@^4.0.1, redux-persist@^4.3.0:
+  version "4.3.0"
+  resolved "https://registry.yarnpkg.com/redux-persist/-/redux-persist-4.3.0.tgz#93484d103ece3bbc1c2bbac3914272846752d386"
+  dependencies:
+    json-stringify-safe "^5.0.1"
+    lodash "^4.11.1"
+    lodash-es "^4.16.0"
 
 redux-thunk@^2.1.0:
   version "2.2.0"

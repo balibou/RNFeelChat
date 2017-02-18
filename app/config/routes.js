@@ -13,6 +13,7 @@ import Info from '../routes/Info';
 import NavBar from '../routes/NavBar';
 import Loading from '../components/Loading'
 import ContactProfilePage from '../routes/ContactProfilePage';
+import ChatPage from '../routes/ChatPage';
 
 
 const Data = Meteor.getData();
@@ -268,6 +269,43 @@ export const routes = {
               style={styles.ContactProfilePageRouteLeftButtonText}
             >
               {selectedTab}
+            </Text>
+          </View>
+        );
+      },
+    };
+  },
+  getChatPageRoute(contact, fullName) {
+    return {
+      renderScene(navigator) {
+        return (
+          <ChatPage
+            navigator={navigator}
+            contact={contact}
+            contactFullName={fullName}
+          />
+        );
+      },
+
+      showNavigationBar: true,
+
+      getTitle() {
+        return fullName;
+      },
+
+      renderLeftButton(navigator) {
+        return (
+          <View style={styles.ContactProfilePageRouteLeftButtonView}>
+            <Icon
+              name='chevron-left'
+              size={28}
+              onPress={() => navigator.pop()}
+            />
+            <Text
+              onPress={() => navigator.pop()}
+              style={styles.ContactProfilePageRouteLeftButtonText}
+            >
+              Infos
             </Text>
           </View>
         );

@@ -17,6 +17,7 @@ import * as tokenActions from '../actions/tokenActions';
 import * as navBarActions from '../actions/navBarActions';
 import * as contactsActions from '../actions/contactsActions';
 import { loadInitialTokenState } from '../config/loadInitialTokenState';
+// import * as userActions from '../actions/userActions';
 
 class App extends Component {
   componentWillMount() {
@@ -59,6 +60,7 @@ export default connect(state => ({
   loadingToken: state.token.loadingToken,
   selectedTab: state.navBar.selectedTab,
   contacts: state.contacts,
+  // userInfo: state.user.userInfo,
 }),
   (dispatch) => ({
     countryActions: bindActionCreators(countryActions, dispatch),
@@ -69,6 +71,7 @@ export default connect(state => ({
     tokenActions: bindActionCreators(tokenActions, dispatch),
     navBarActions: bindActionCreators(navBarActions, dispatch),
     contactsActions: bindActionCreators(contactsActions, dispatch),
+    // userActions: bindActionCreators(userActions, dispatch),
   })
 )(MeteorContainer);
 
