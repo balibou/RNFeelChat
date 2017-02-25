@@ -3700,9 +3700,9 @@ react-native-loading-spinner-overlay@^0.3.0:
   version "0.3.0"
   resolved "https://registry.yarnpkg.com/react-native-loading-spinner-overlay/-/react-native-loading-spinner-overlay-0.3.0.tgz#3659c7c35523087e8db8f04c9e526d519f907b2b"
 
-react-native-meteor-redux@^1.1.11:
-  version "1.1.11"
-  resolved "https://registry.yarnpkg.com/react-native-meteor-redux/-/react-native-meteor-redux-1.1.11.tgz#fe5cb598c43ebba8821e3b1f5eafd3c5e2f80643"
+react-native-meteor-redux@^1.1.18:
+  version "1.1.18"
+  resolved "https://registry.yarnpkg.com/react-native-meteor-redux/-/react-native-meteor-redux-1.1.18.tgz#a571a7063b76b165c49f825029c51159ebaab08b"
   dependencies:
     events "^1.1.1"
     lodash "^4.17.4"

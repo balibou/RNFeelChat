@@ -3,11 +3,13 @@ import { connect } from 'react-redux';
 import Meteor, { createContainer } from 'react-native-meteor';
 import React, { Component } from 'react';
 import { View, StyleSheet, Text } from 'react-native';
+import { subscribeCached } from 'react-native-meteor-redux';
 
 import settings from '../config/settings';
 import LoggedOut from '../layouts/LoggedOut';
 import LoggedIn from '../layouts/LoggedIn';
 import SignedIn from '../layouts/SignedIn';
+import { MeteorStore } from './meteorRedux';
 import * as countryActions from '../actions/countryActions';
 import * as phoneActions from '../actions/phoneActions';
 import * as codeActions from '../actions/codeActions';
@@ -43,9 +45,9 @@ class App extends Component {
 }
 
 const MeteorContainer = createContainer(() => {
-  Meteor.subscribe('userData');
+  subscribeCached(MeteorStore, 'userData');
   return {
-    user: Meteor.user(),
+    user: Meteor.collection('users').findOne(),
     loggingIn: Meteor.loggingIn(),
   };
 }, App);
