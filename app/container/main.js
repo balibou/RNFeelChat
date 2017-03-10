@@ -3,13 +3,15 @@ import { connect } from 'react-redux';
 import Meteor, { createContainer } from 'react-native-meteor';
 import React, { Component } from 'react';
 import { View, StyleSheet, Text } from 'react-native';
-import { subscribeCached } from 'react-native-meteor-redux';
+import Realm from 'realm';
+import { realm } from './realmSchema';
+// import { subscribeCached } from 'react-native-meteor-redux';
 
 import settings from '../config/settings';
 import LoggedOut from '../layouts/LoggedOut';
 import LoggedIn from '../layouts/LoggedIn';
 import SignedIn from '../layouts/SignedIn';
-import { MeteorStore } from './meteorRedux';
+// import { MeteorStore } from './meteorRedux';
 import * as countryActions from '../actions/countryActions';
 import * as phoneActions from '../actions/phoneActions';
 import * as codeActions from '../actions/codeActions';
@@ -34,6 +36,40 @@ class App extends Component {
   render() {
     const { existingToken, loadingToken } = this.props;
     const { connected } = Meteor.status();
+    const { user } = this.props;
+    // console.log(user);
+    const arr = realm.objects('User')[0].contacts;
+    // console.log(arr.length);
+    // for (var i=0; i<arr.length; i++){
+    //   console.log(arr[i]);
+    // }
+    arr.map(x => console.log(x));
+    // const toto = {}
+    // realm.objects('User').map(x => Object.assign(toto, x));
+    // console.log(toto);
+    // realm.objects('User').map(x => console.log(x));
+    // if (!realm.objects('User').length && user) {
+    //   realm.write(() => {
+    //     const userRealm = realm.create(
+    //       'User', {
+    //         _id: user._id,
+    //         _version: user._version,
+    //         contacts: user.contacts,
+    //         createdAt: user.createdAt,
+    //         signedIn: user.signedIn,
+    //       }
+    //     );
+    //     /*user.contacts.map(contact => {
+    //       console.log(contact);
+    //       userRealm.contacts.push(contact);
+    //     });*/
+    //   });
+    // }
+    // realm.write(() => {
+    //   const allUser = realm.objects('User');
+    //   realm.delete(allUser);
+    // });
+    // realm.objects('User').map(x => console.log(x));
 
     if (existingToken && !loadingToken) {
       return <LoggedIn {...this.props} connected={connected} />;
@@ -45,7 +81,7 @@ class App extends Component {
 }
 
 const MeteorContainer = createContainer(() => {
-  subscribeCached(MeteorStore, 'userData');
+  Meteor.subscribe('userData');
   return {
     user: Meteor.collection('users').findOne(),
     loggingIn: Meteor.loggingIn(),

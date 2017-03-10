@@ -3,10 +3,20 @@ import { Text, View } from 'react-native';
 import { Tabs, Tab, Icon } from 'react-native-elements';
 import styles from './styles';
 import Contacts from '../Contacts';
+import Realm from 'realm';
 
 class NavBar extends Component {
   render() {
     const { selectedTab, changeTab } = this.props.navigator.props;
+    // let realm = new Realm({
+    //   schema: [{
+    //     name: 'User',
+    //     primaryKey: '_id',
+    //     properties: {
+    //       _id: 'string',
+    //     },
+    //   }],
+    // });
     return (
       <Tabs>
         <Tab
@@ -30,6 +40,10 @@ class NavBar extends Component {
           onPress={() => changeTab('chats')}
         >
         <View><Text>CHATS</Text></View>
+        {/* <View>
+          {realm.objects('User').map(x => <Text key={x._id}>{x._id}</Text>)}
+        </View> */}
+
         </Tab>
         <Tab
           selected={selectedTab === 'Settings'}
