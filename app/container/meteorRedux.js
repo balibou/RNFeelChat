@@ -1,11 +1,14 @@
-import initMeteorRedux from 'react-native-meteor-redux';
-import { AsyncStorage } from 'react-native';
-import { persistStore, autoRehydrate } from 'redux-persist';
+// import initMeteorRedux from 'react-native-meteor-redux';
+// import { AsyncStorage } from 'react-native';
+// import { persistStore, autoRehydrate } from 'redux-persist';
+//
+// const MeteorStore = initMeteorRedux(undefined, autoRehydrate());
+//
+// persistStore(MeteorStore, { storage: AsyncStorage }, () => {
+//   MeteorStore.loaded();
+// });
+//
+// export { MeteorStore };
 
-const MeteorStore = initMeteorRedux(undefined, autoRehydrate());
-
-persistStore(MeteorStore, { storage: AsyncStorage }, () => {
-  MeteorStore.loaded();
-});
-
-export { MeteorStore };
+import { initMeteorRealm } from 'react-native-meteor-redux';
+export const MeteorStore = initMeteorRealm({ blackList: [] });

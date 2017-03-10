@@ -32,8 +32,9 @@ class App extends Component {
   }
 
   render() {
-    const { existingToken, loadingToken } = this.props;
+    const { existingToken, loadingToken, user } = this.props;
     const { connected } = Meteor.status();
+    console.log(user);
 
     if (existingToken && !loadingToken) {
       return <LoggedIn {...this.props} connected={connected} />;
